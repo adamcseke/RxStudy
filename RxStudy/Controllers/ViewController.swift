@@ -36,6 +36,7 @@ class ViewController: UIViewController {
     private var viewModel = HeroesViewModel()
     private var collectionView: UICollectionView!
     private var allHeroes: [Heroes] = []
+    private var searchButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class ViewController: UIViewController {
         configureFilterTextfield()
         setupCollectionView()
         bindCollectionViewData()
+        configureSearchButton()
     }
     
     func bindCollectionViewData() {
@@ -113,7 +115,7 @@ class ViewController: UIViewController {
     private func configureTextfield() {
         textfield = UITextField()
         textfield.delegate = self
-        textfield.returnKeyType = .search
+        textfield.returnKeyType = .done
         textfield.autocapitalizationType = .none
         textfield.autocorrectionType = .no
         textfield.layer.borderColor = UIColor.black.cgColor
@@ -125,7 +127,7 @@ class ViewController: UIViewController {
         textfield.layer.cornerRadius = 16
         textfield.layer.masksToBounds = true
         textfield.textAlignment = .center
-        textfield.addTarget(self, action: #selector(getHeroes), for: .editingDidEndOnExit)
+        textfield.addTarget(self, action: #selector(dismissKeyboard), for: .editingDidEndOnExit)
         
         gradientView.addSubview(textfield)
         
@@ -135,6 +137,10 @@ class ViewController: UIViewController {
             make.leading.equalTo(31)
             make.centerX.equalToSuperview()
         })
+    }
+    
+    @objc private func dismissKeyboard() {
+        
     }
     
     private func configureGradientView() {
@@ -149,7 +155,6 @@ class ViewController: UIViewController {
     
     private func configureFilterTextfield() {
         filterTextfield = UITextField()
-        filterTextfield.delegate = self
         filterTextfield.returnKeyType = .search
         filterTextfield.autocapitalizationType = .none
         filterTextfield.autocorrectionType = .no
@@ -177,7 +182,35 @@ class ViewController: UIViewController {
     @objc private func filteringHeroes() {
         filterHeroes()
     }
+    
+    private func configureSearchButton() {
+        searchButton = UIButton()
+        searchButton.layer.cornerRadius = 16
+        searchButton.layer.masksToBounds = true
+        searchButton.backgroundColor = .systemOrange.withAlphaComponent(0.5)
+        searchButton.setTitle("Search", for: .normal)
+        searchButton.setTitleColor(.black, for: .normal)
+        searchButton.addTarget(self, action: #selector(getHeroes), for: .touchUpInside)
+        gradientView.addSubview(searchButton)
+        
+        searchButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-20)
+            make.leading.equalToSuperview().offset(31)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(50)
+        }
+    }
 }
 
 extension ViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textfield.text?.count ?? 0 < 1 {
+            searchButton.isEnabled = false
+            searchButton.backgroundColor = .systemOrange.withAlphaComponent(0.5)
+        } else {
+            searchButton.isEnabled = true
+            searchButton.backgroundColor = .systemOrange
+        }
+        return true
+    }
 }
