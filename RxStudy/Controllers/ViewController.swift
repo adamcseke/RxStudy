@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     private var filterTextfield: UITextField!
     private var viewModel = HeroesViewModel()
     private var collectionView: UICollectionView!
-    private var allHeroes = [Heroes]()
+    private var allHeroes: [Heroes] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,13 +63,15 @@ class ViewController: UIViewController {
     
     private func filterHeroes() {
         if filterTextfield.text == "" {
-            self.viewModel.searchedHeroes.accept(self.allHeroes)
+            self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .left, animated: true)
         } else {
             self.allHeroes.append(contentsOf: self.viewModel.searchedHeroes.value)
-            let heroes = [Heroes]()
-            self.viewModel.searchedHeroes.accept(heroes)
-            self.viewModel.searchedHeroes.accept(self.allHeroes.filter({ $0.name.lowercased().contains(self.filterTextfield.text?.lowercased() ?? "")}))
+            
+            self.viewModel.searchedHeroes.value.forEach { hero in
+                self.viewModel.searchedHeroes.accept(self.allHeroes.filter({ $0.name.lowercased().contains(self.filterTextfield.text?.lowercased() ?? "")}))
+            }
         }
+        self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .left, animated: true)
     }
     
     @objc private func getHeroes() {
@@ -79,6 +81,7 @@ class ViewController: UIViewController {
             viewModel.name = textfield.text ?? ""
             viewModel.getHeroes()
             textfield.text = ""
+            self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .left, animated: true)
         }
     }
     
@@ -97,7 +100,6 @@ class ViewController: UIViewController {
         collectionView.backgroundColor = .clear
         gradientView.addSubview(collectionView)
         
-        
         collectionView.snp.makeConstraints { make in
             make.leading.centerX.equalToSuperview()
             make.top.equalTo(filterTextfield.snp.bottom).offset(10)
@@ -114,7 +116,10 @@ class ViewController: UIViewController {
         textfield.autocorrectionType = .no
         textfield.layer.borderColor = UIColor.black.cgColor
         textfield.layer.borderWidth = 3
-        textfield.placeholder = "Search for a hero..."
+        textfield.attributedPlaceholder = NSAttributedString(
+            string: "Search for a hero",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]
+        )
         textfield.layer.cornerRadius = 16
         textfield.layer.masksToBounds = true
         textfield.textAlignment = .center
@@ -151,7 +156,10 @@ class ViewController: UIViewController {
         filterTextfield.layer.cornerRadius = 16
         filterTextfield.layer.masksToBounds = true
         filterTextfield.textAlignment = .center
-        filterTextfield.placeholder = "Filter the heroes..."
+        filterTextfield.attributedPlaceholder = NSAttributedString(
+            string: "Filter the heroes",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]
+        )
         filterTextfield.addTarget(self, action: #selector(filteringHeroes), for: .editingDidEndOnExit)
         
         gradientView.addSubview(filterTextfield)

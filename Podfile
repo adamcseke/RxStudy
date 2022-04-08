@@ -9,7 +9,6 @@ target 'RxStudy' do
 
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'CollectionViewPagingLayout'
   pod 'SnapKit'
   pod 'SDWebImage'
   pod 'PaddingLabel'

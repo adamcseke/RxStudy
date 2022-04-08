@@ -8,7 +8,6 @@
 import PaddingLabel
 import SnapKit
 import UIKit
-import CollectionViewPagingLayout
 import SDWebImage
 
 class HeroesCell: UICollectionViewCell {

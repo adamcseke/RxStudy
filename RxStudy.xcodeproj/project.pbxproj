@@ -67,6 +67,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37709D1A27FEFD6800B9A05F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				37F1690127FD71AD005943F4 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		37709D1B27FEFD7B00B9A05F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37709D1827FDCBC400B9A05F /* GradientView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		37832E0427FD7C22001EAB8A /* RestClient */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,17 +137,17 @@
 		37F168FC27FD71AD005943F4 /* RxStudy */ = {
 			isa = PBXGroup;
 			children = (
+				37709D1B27FEFD7B00B9A05F /* Views */,
+				37709D1A27FEFD6800B9A05F /* Controllers */,
 				37832E1E27FD85D4001EAB8A /* Cells */,
 				37832E0B27FD7EA1001EAB8A /* Models */,
 				37832E0427FD7C22001EAB8A /* RestClient */,
 				37F168FD27FD71AD005943F4 /* AppDelegate.swift */,
 				37F168FF27FD71AD005943F4 /* SceneDelegate.swift */,
-				37F1690127FD71AD005943F4 /* ViewController.swift */,
 				37F1690327FD71AD005943F4 /* Main.storyboard */,
 				37F1690627FD71AE005943F4 /* Assets.xcassets */,
 				37F1690827FD71AE005943F4 /* LaunchScreen.storyboard */,
 				37F1690B27FD71AE005943F4 /* Info.plist */,
-				37709D1827FDCBC400B9A05F /* GradientView.swift */,
 			);
 			path = RxStudy;
 			sourceTree = "<group>";
@@ -436,6 +452,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -448,7 +465,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -466,6 +483,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -478,7 +496,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
