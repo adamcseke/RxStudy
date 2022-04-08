@@ -12,16 +12,18 @@ import SnapKit
 struct HeroesViewModel {
     var searchedHeroes = BehaviorRelay<[Heroes]>(value: [])
     var name: String = ""
+    let disposedBag = DisposeBag()
+    
+    
     
     func getHeroes() {
-        let url = RestClient.Constants.baseUrl + "/search/\(name)/"
-        RestClient.shared.request(urlString: url).subscribe(onSuccess: { heroes in
+        RestClient.shared.getHeroes(name: name).subscribe(onSuccess: { heroes in
             self.searchedHeroes.accept(heroes.results)
         }, onFailure: { error in
             print(error)
         }, onDisposed: {
             print("Cool")
-        })
+        }).disposed(by: disposedBag)
         
     }
 }
@@ -85,7 +87,7 @@ class ViewController: UIViewController {
             viewModel.name = textfield.text ?? ""
             viewModel.getHeroes()
             textfield.text = ""
-            self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .left, animated: true)
+//            self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 0), at: .left, animated: true)
         }
     }
     

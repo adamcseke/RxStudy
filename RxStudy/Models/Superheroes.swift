@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Superheroes
-struct Superheroes: Decodable {
+struct Superheroes: Codable {
     let response: String
     let resultsFor: String
     let results: [Heroes]
