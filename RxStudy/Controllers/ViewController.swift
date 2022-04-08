@@ -9,67 +9,69 @@ import RxSwift
 import UIKit
 import SnapKit
 
-struct HeroesViewModel {
-    var searchedHeroes = BehaviorRelay<[Heroes]>(value: [])
-    var name: String = ""
-    let disposedBag = DisposeBag()
-    
-    
-    
-    func getHeroes() {
-        RestClient.shared.getHeroes(name: name).subscribe(onSuccess: { heroes in
-            self.searchedHeroes.accept(heroes.results)
-        }, onFailure: { error in
-            print(error)
-        }, onDisposed: {
-            print("Cool")
-        }).disposed(by: disposedBag)
-        
-    }
-}
-
 class ViewController: UIViewController {
     
-    let bag = DisposeBag()
+    let disposeBag = DisposeBag()
     private var gradientView: GradientView!
     private var heroesButton: UIButton!
     private var textfield: UITextField!
     private var filterTextfield: UITextField!
-    private var viewModel = HeroesViewModel()
+    private var viewModel: HeroesViewModel!
     private var collectionView: UICollectionView!
     private var allHeroes: [Heroes] = []
     private var searchButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = HeroesViewModel()
         configureGradientView()
         configureTextfield()
         configureFilterTextfield()
+        configureSearchButton()
         setupCollectionView()
         bindCollectionViewData()
-        configureSearchButton()
+        
+        driveToUI()
+        bindToViewModel()
+    }
+    
+    func driveToUI() {
+        viewModel.searchedHeroes
+            .asDriver()
+            .drive { [weak self] _ in
+                self?.getHeroes()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindToViewModel() {
+        textfield.rx.text
+            .bind(to: viewModel.name)
+            .disposed(by: disposeBag)
+        
+        searchButton.rx.tap
+            .bind(to: viewModel.userDidTapSearch)
+            .disposed(by: disposeBag)
     }
     
     func bindCollectionViewData() {
         viewModel.searchedHeroes.bind(to: collectionView.rx.items(cellIdentifier: "cell", cellType: HeroesCell.self)) {
             row, model, cell in
             cell.bind(name: model.name,description: model.biography.fullName, imageURL: model.image.url)
-        }.disposed(by: bag)
+        }.disposed(by: disposeBag)
         
         collectionView.rx.modelSelected(Heroes.self).bind { hero in
             print(hero.name)
-        }.disposed(by: bag)
+        }.disposed(by: disposeBag)
         
         collectionView.rx.itemSelected.subscribe { indexPath in
             print(indexPath)
-        }.disposed(by: bag)
+        }.disposed(by: disposeBag)
         
-        viewModel.getHeroes()
     }
     
     private func filterHeroes() {
         if filterTextfield.text == "" {
-            self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .left, animated: true)
         } else {
             self.allHeroes.append(contentsOf: self.viewModel.searchedHeroes.value)
             
@@ -77,18 +79,12 @@ class ViewController: UIViewController {
                 self.viewModel.searchedHeroes.accept(self.allHeroes.filter({ $0.name.lowercased().contains(self.filterTextfield.text?.lowercased() ?? "")}))
             }
         }
-        self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 1), at: .left, animated: true)
     }
     
     @objc private func getHeroes() {
-        if textfield.text?.count == 0 {
-            return
-        } else {
-            viewModel.name = textfield.text ?? ""
-            viewModel.getHeroes()
-            textfield.text = ""
-//            self.collectionView.scrollToItem(at:IndexPath(item: 0, section: 0), at: .left, animated: true)
-        }
+        textfield.text = ""
+        searchButton.isEnabled = false
+        searchButton.backgroundColor = .systemOrange.withAlphaComponent(0.5)
     }
     
     private func setupCollectionView() {
@@ -109,7 +105,7 @@ class ViewController: UIViewController {
         collectionView.snp.makeConstraints { make in
             make.leading.centerX.equalToSuperview()
             make.top.equalTo(filterTextfield.snp.bottom).offset(10)
-            make.bottom.equalToSuperview().offset(-20)
+            make.bottom.equalTo(searchButton.snp.top).offset(-10)
         }
         
     }
@@ -129,12 +125,11 @@ class ViewController: UIViewController {
         textfield.layer.cornerRadius = 16
         textfield.layer.masksToBounds = true
         textfield.textAlignment = .center
-        textfield.addTarget(self, action: #selector(dismissKeyboard), for: .editingDidEndOnExit)
         
         gradientView.addSubview(textfield)
         
         textfield.snp.makeConstraints({ make in
-            make.top.equalToSuperview().offset(50)
+            make.centerY.equalToSuperview().multipliedBy(0.3)
             make.height.equalTo(62)
             make.leading.equalTo(31)
             make.centerX.equalToSuperview()
@@ -192,11 +187,11 @@ class ViewController: UIViewController {
         searchButton.backgroundColor = .systemOrange.withAlphaComponent(0.5)
         searchButton.setTitle("Search", for: .normal)
         searchButton.setTitleColor(.black, for: .normal)
-        searchButton.addTarget(self, action: #selector(getHeroes), for: .touchUpInside)
+        
         gradientView.addSubview(searchButton)
         
         searchButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-20)
+            make.centerY.equalToSuperview().multipliedBy(1.7)
             make.leading.equalToSuperview().offset(31)
             make.centerX.equalToSuperview()
             make.height.equalTo(50)
@@ -205,14 +200,19 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textfield.text?.count ?? 0 < 1 {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let name = textField.text ?? ""
+        
+        if name.isEmpty {
             searchButton.isEnabled = false
             searchButton.backgroundColor = .systemOrange.withAlphaComponent(0.5)
         } else {
             searchButton.isEnabled = true
             searchButton.backgroundColor = .systemOrange
         }
-        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

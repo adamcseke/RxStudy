@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		374C04F828004EEB00AA29D3 /* RestClient+Heroes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374C04F728004EEB00AA29D3 /* RestClient+Heroes.swift */; };
+		374C04FB2800709E00AA29D3 /* HeroesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374C04FA2800709E00AA29D3 /* HeroesViewModel.swift */; };
 		37709D1927FDCBC400B9A05F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37709D1827FDCBC400B9A05F /* GradientView.swift */; };
 		37832E0627FD7C61001EAB8A /* RestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37832E0527FD7C61001EAB8A /* RestClient.swift */; };
 		37832E1527FD7F65001EAB8A /* Powerstats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37832E0C27FD7F64001EAB8A /* Powerstats.swift */; };
@@ -33,6 +34,7 @@
 		01DEE931E66BC5CD54F3D934 /* Pods_RxStudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxStudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		370F02FA27FD730900FEC80C /* RxStudy.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = RxStudy.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		374C04F728004EEB00AA29D3 /* RestClient+Heroes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RestClient+Heroes.swift"; sourceTree = "<group>"; };
+		374C04FA2800709E00AA29D3 /* HeroesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroesViewModel.swift; sourceTree = "<group>"; };
 		37709D1827FDCBC400B9A05F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		37832E0527FD7C61001EAB8A /* RestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		37832E0C27FD7F64001EAB8A /* Powerstats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Powerstats.swift; sourceTree = "<group>"; };
@@ -69,6 +71,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		374C04F92800708100AA29D3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				374C04FA2800709E00AA29D3 /* HeroesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		374C04FC2800732B00AA29D3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37F168FD27FD71AD005943F4 /* AppDelegate.swift */,
+				37F168FF27FD71AD005943F4 /* SceneDelegate.swift */,
+				37F1690327FD71AD005943F4 /* Main.storyboard */,
+				37F1690627FD71AE005943F4 /* Assets.xcassets */,
+				37F1690827FD71AE005943F4 /* LaunchScreen.storyboard */,
+				37F1690B27FD71AE005943F4 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		37709D1A27FEFD6800B9A05F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,17 +163,13 @@
 		37F168FC27FD71AD005943F4 /* RxStudy */ = {
 			isa = PBXGroup;
 			children = (
+				374C04FC2800732B00AA29D3 /* Resources */,
+				374C04F92800708100AA29D3 /* ViewModels */,
 				37709D1B27FEFD7B00B9A05F /* Views */,
 				37709D1A27FEFD6800B9A05F /* Controllers */,
 				37832E1E27FD85D4001EAB8A /* Cells */,
 				37832E0B27FD7EA1001EAB8A /* Models */,
 				37832E0427FD7C22001EAB8A /* RestClient */,
-				37F168FD27FD71AD005943F4 /* AppDelegate.swift */,
-				37F168FF27FD71AD005943F4 /* SceneDelegate.swift */,
-				37F1690327FD71AD005943F4 /* Main.storyboard */,
-				37F1690627FD71AE005943F4 /* Assets.xcassets */,
-				37F1690827FD71AE005943F4 /* LaunchScreen.storyboard */,
-				37F1690B27FD71AE005943F4 /* Info.plist */,
 			);
 			path = RxStudy;
 			sourceTree = "<group>";
@@ -300,6 +319,7 @@
 				37832E1A27FD7F65001EAB8A /* APIError.swift in Sources */,
 				37832E1927FD7F65001EAB8A /* Superheroes.swift in Sources */,
 				37F168FE27FD71AD005943F4 /* AppDelegate.swift in Sources */,
+				374C04FB2800709E00AA29D3 /* HeroesViewModel.swift in Sources */,
 				37832E1C27FD7F65001EAB8A /* Connections.swift in Sources */,
 				37F1690027FD71AD005943F4 /* SceneDelegate.swift in Sources */,
 				37832E1827FD7F65001EAB8A /* Image.swift in Sources */,
@@ -452,7 +472,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6BZ45VV3SM;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RxStudy/Info.plist;
+				INFOPLIST_FILE = RxStudy/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -483,7 +503,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6BZ45VV3SM;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RxStudy/Info.plist;
+				INFOPLIST_FILE = RxStudy/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

@@ -32,13 +32,13 @@ class HeroesCell: UICollectionViewCell {
     func setup() {
         card = UIView()
         card.backgroundColor = .black
-        card.layer.cornerRadius = 16
+        card.layer.cornerRadius = 24
         card.layer.masksToBounds = true
         contentView.addSubview(card)
             
         card.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(50)
-            make.centerX.equalToSuperview()
+            make.height.width.equalTo(contentView.frame.width / 2)
+            make.centerX.equalToSuperview().multipliedBy(1.2)
             make.centerY.equalToSuperview()
         }
         
@@ -57,8 +57,8 @@ class HeroesCell: UICollectionViewCell {
         contentView.addSubview(cellBackgroundImageView)
         
         cellBackgroundImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.height.width.equalTo(contentView.frame.width / 2)
+            make.centerX.equalTo(card.snp.leading)
+            make.height.width.equalTo(contentView.frame.width / 2.3)
             make.top.equalToSuperview().offset(20)
         }
     }
