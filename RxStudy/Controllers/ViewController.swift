@@ -17,8 +17,6 @@ struct HeroesViewModel {
         let url = RestClient.Constants.baseUrl + "/search/\(name)/"
         RestClient.shared.request(urlString: url).subscribe(onSuccess: { heroes in
             self.searchedHeroes.accept(heroes.results)
-            print(heroes)
-            print(url)
         }, onFailure: { error in
             print(error)
         }, onDisposed: {
@@ -56,6 +54,10 @@ class ViewController: UIViewController {
         
         collectionView.rx.modelSelected(Heroes.self).bind { hero in
             print(hero.name)
+        }.disposed(by: bag)
+        
+        collectionView.rx.itemSelected.subscribe { indexPath in
+            print(indexPath)
         }.disposed(by: bag)
         
         viewModel.getHeroes()
